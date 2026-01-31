@@ -9,7 +9,7 @@ export default defineConfig({
   base: '/jun_myvue/',
   plugins: [
     vue(),
-    vueDevTools(),
+    //vueDevTools(),
   ],
   resolve: {
     alias: {
