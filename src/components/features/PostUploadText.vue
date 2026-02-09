@@ -38,7 +38,7 @@ const onInput = () => {
       <img
         :src="previewUrl"
         alt="업로드 미리보기"
-        class="w-full h-[450px] object-cover"
+        class="object-cover w-full"
       />
       <figure></figure>
     </div>

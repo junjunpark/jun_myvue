@@ -100,7 +100,7 @@ async function loadMore() {
 <style>
 .upload-image{
     width: 100%;
-    height: 450px;
+    height: auto;
     background: cornflowerblue;
     background-size : cover;
 }

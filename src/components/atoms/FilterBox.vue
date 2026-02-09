@@ -21,7 +21,7 @@ const props = defineProps({
 .filter-item {
   width: 100px;
   height: 100px;
-  margin: 10px;
+  margin: 0; /* margin 제거 - 부모에서 gap으로 관리 */
   display: inline-block;
   background-size: cover;
   background-position: center;
@@ -30,6 +30,7 @@ const props = defineProps({
   transition: border 0.2s;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0; /* 그래빙 시 크기 유지 */
 }
 
 .filter-item figure {
@@ -37,6 +38,7 @@ const props = defineProps({
   height: 100%;
   margin: 0;
   padding: 0;
+  pointer-events: none; /* figure가 클릭 이벤트 방해하지 않도록 */
 }
 
 .filter-item:hover {
