@@ -1,11 +1,15 @@
-<script setup></script>
+<script>
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+
+export default {
+  components: {
+    DefaultLayout
+  }
+}
+</script>
 
 <template>
-  <h1>You did it! vue</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <DefaultLayout>
+    <!-- <RouterView /> -->
+  </DefaultLayout>
 </template>
-
-<style scoped lang="scss"></style>
