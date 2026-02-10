@@ -1,13 +1,13 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import LayoutMain from '@/components/layout/LayoutMain.vue'
+// import LayoutMain from '@/components/layout/LayoutMain.vue'
 
 export default {
   components: {
     Header,
     Footer,
-    LayoutMain
+    // LayoutMain
   }
 }
 </script>
@@ -21,8 +21,8 @@ export default {
     <div id="wrapper" class="wrapper">
         <Header />
         <main id="main" tabindex="-1">
-            <LayoutMain />
-            <!-- <slot /> -->
+            <!-- <LayoutMain /> -->
+            <slot />
         </main>
         <Footer />
     </div>

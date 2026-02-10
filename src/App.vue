@@ -10,6 +10,6 @@ export default {
 
 <template>
   <DefaultLayout>
-    <!-- <RouterView /> -->
+    <RouterView />
   </DefaultLayout>
 </template>

@@ -1,6 +1,6 @@
-@use '@/assets/styles/reset';
+// @use '@/assets/styles/reset';
 @use '@/assets/styles/variables' as var;
-@use '@/assets/styles/common';
+// @use '@/assets/styles/common';
 
 
 
@@ -17,3 +17,37 @@ html, body {
 header { grid-row: 1; }
 main   { grid-row: 2; }
 footer { grid-row: 3; }
+
+/* accessibility */
+#skip {
+    position: fixed;
+    z-index: 999999;
+    a {
+        font-size: 16px;
+        position: absolute;
+        top: -100px;
+        left: 0;
+        display: flex;
+        width: 100vw;
+        padding: 5px 0;
+        opacity: 0;
+        color: #fff;
+        background-color: #000;
+        justify-content: center;
+        &:focus {
+            top: 0;
+            opacity: 1;
+        }
+    }
+}
+/* 스크롤 락 - body에 클래스 추가 시 적용 */
+body.scroll-locked {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100% !important;
+  overflow: hidden !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: none;
+}
