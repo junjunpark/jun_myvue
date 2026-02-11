@@ -1,5 +1,5 @@
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import TodoForm from '@/components/features/TodoForm.vue'
 import TodoList from '@/components/features/TodoList.vue'
 import axios from 'axios';
@@ -18,6 +18,7 @@ export default {
         const error = ref('');
         const limit = 5;
         const currentPage = ref(1);
+        const searchText = ref('');
 
         const numberOfPages = computed(()=>{
             return Math.ceil(todos.value.length / limit);
@@ -31,8 +32,20 @@ export default {
 
         const getTodos = async ()=>{
             try {
-                const res = await axios.get('http://localhost:3000/todos')
-                todos.value = res.data;
+                const url = 'http://localhost:3000/todos';
+                const res = await axios.get(url);
+
+                // 클라이언트 측에서 필터링
+                let filteredTodos = res.data;
+                if (searchText.value) {
+                    filteredTodos = res.data.filter(todo =>
+                        todo.subject.toLowerCase().includes(searchText.value.toLowerCase())
+                    );
+                }
+
+                // 역순으로 정렬 (최신 항목이 먼저 보이도록)
+                todos.value = filteredTodos.reverse();
+                currentPage.value = 1;
             } catch (err){
                 console.log(err);
                 error.value = 'Network Error'
@@ -47,7 +60,8 @@ export default {
                     subject: todo.subject,
                     completed: todo.completed
                 })
-                todos.value.push(res.data);
+                // 맨 앞에 추가 (unshift 사용)
+                todos.value.unshift(res.data);
             } catch (err) {
                 console.log(err);
                 error.value = 'Network Error'
@@ -56,12 +70,14 @@ export default {
 
         const deleteTodo = async (index) => {
             error.value = '';
-            // paginatedTodos의 index를 전체 todos의 index로 변환
             const actualIndex = (currentPage.value - 1) * limit + index;
             const id = todos.value[actualIndex].id;
             try {
                 await axios.delete(`http://localhost:3000/todos/${id}`)
                 todos.value.splice(actualIndex, 1)
+                if (paginatedTodos.value.length === 0 && currentPage.value > 1) {
+                    currentPage.value--;
+                }
             } catch(err) {
                 console.log(err);
                 error.value = 'Network Error'
@@ -70,7 +86,6 @@ export default {
 
         const toggleTodo = async (index) => {
             error.value = '';
-            // paginatedTodos의 index를 전체 todos의 index로 변환
             const actualIndex = (currentPage.value - 1) * limit + index;
             const id = todos.value[actualIndex].id;
             try {
@@ -89,14 +104,16 @@ export default {
             currentPage.value = page;
         }
 
-        const searchText = ref('');
-        const filteredTodos = computed(()=>{
-            if(searchText.value){
-                return paginatedTodos.value.filter(todo => {
-                    return todo.subject.includes(searchText.value)
-                })
-            }
-            return paginatedTodos.value;
+        let timeout = null;
+        const searchTodo = ()=>{
+            clearTimeout(timeout);
+            getTodos();
+        }
+        watch(searchText, () => {
+            clearTimeout(timeout);
+            timeout = setTimeout (() =>{
+                getTodos();
+            },1000);
         })
 
         return {
@@ -107,7 +124,7 @@ export default {
             deleteTodo,
             toggleTodo,
             searchText,
-            filteredTodos,
+            paginatedTodos,
             numberOfPages,
             currentPage,
             movePage,
@@ -125,19 +142,22 @@ export default {
         class="form-control"
         v-model="searchText"
         placeholder="search"
+        @keyup.enter ="searchTodo"
     >
     <hr>
     <TodoForm @add-todo="addTodo" />
     <div v-if="error" style="color: red;">{{ error }}</div>
-    <div v-if="!filteredTodos.length">to-do가 없습니다</div>
+    <div v-if="!todos.length">
+        {{ searchText ? '검색 결과가 없습니다' : 'to-do가 없습니다' }}
+    </div>
 
     <TodoList
-        :todos="filteredTodos"
+        :todos="paginatedTodos"
         @toggle-todo="toggleTodo"
         @delete-todo="deleteTodo"
     />
     <hr>
-    <nav aria-label="Page navigation example">
+    <nav v-if="todos.length" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
                 <a
