@@ -1,3 +1,67 @@
+<template>
+<div class="container">
+    <h2>To-Do List</h2>
+
+    <input
+        type="text"
+        class="form-control"
+        v-model="searchText"
+        placeholder="search"
+        @keyup.enter ="searchTodo"
+    >
+    <hr>
+    <TodoForm @add-todo="addTodo" />
+    <div v-if="error" style="color: red;">{{ error }}</div>
+    <div v-if="!todos.length">
+        {{ searchText ? '검색 결과가 없습니다' : 'to-do가 없습니다' }}
+    </div>
+
+    <TodoList
+        :todos="paginatedTodos"
+        @toggle-todo="toggleTodo"
+        @delete-todo="deleteTodo"
+    />
+    <hr>
+    <nav v-if="todos.length" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="movePage(currentPage - 1)"
+                >
+                    Previous
+                </a>
+            </li>
+            <li
+                v-for="page in numberOfPages"
+                :key="page"
+                class="page-item"
+                :class="{ active: currentPage === page }"
+            >
+                <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="movePage(page)"
+                >
+                    {{ page }}
+                </a>
+            </li>
+            <li class="page-item" :class="{ disabled: currentPage === numberOfPages }">
+                <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="movePage(currentPage + 1)"
+                >
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+</template>
+
 <script>
 import { ref, computed, watch } from 'vue';
 import TodoForm from '@/components/features/TodoForm.vue'
@@ -132,70 +196,6 @@ export default {
     }
 }
 </script>
-
-<template>
-<div class="container">
-    <h2>To-Do List</h2>
-
-    <input
-        type="text"
-        class="form-control"
-        v-model="searchText"
-        placeholder="search"
-        @keyup.enter ="searchTodo"
-    >
-    <hr>
-    <TodoForm @add-todo="addTodo" />
-    <div v-if="error" style="color: red;">{{ error }}</div>
-    <div v-if="!todos.length">
-        {{ searchText ? '검색 결과가 없습니다' : 'to-do가 없습니다' }}
-    </div>
-
-    <TodoList
-        :todos="paginatedTodos"
-        @toggle-todo="toggleTodo"
-        @delete-todo="deleteTodo"
-    />
-    <hr>
-    <nav v-if="todos.length" aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="movePage(currentPage - 1)"
-                >
-                    Previous
-                </a>
-            </li>
-            <li
-                v-for="page in numberOfPages"
-                :key="page"
-                class="page-item"
-                :class="{ active: currentPage === page }"
-            >
-                <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="movePage(page)"
-                >
-                    {{ page }}
-                </a>
-            </li>
-            <li class="page-item" :class="{ disabled: currentPage === numberOfPages }">
-                <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="movePage(currentPage + 1)"
-                >
-                    Next
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-</div>
-</template>
 
 <style scoped lang="scss">
 </style>

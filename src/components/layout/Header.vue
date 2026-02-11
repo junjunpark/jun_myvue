@@ -1,11 +1,3 @@
-<script>
-export default {
-  name: 'Header',
-  data() {
-    return { title: 'Header' }
-  }
-}
-</script>
 
 <template>
   <header class="header">
@@ -14,6 +6,15 @@ export default {
     </h1>
   </header>
 </template>
+
+<script>
+export default {
+  name: 'Header',
+  data() {
+    return { title: 'Header' }
+  }
+}
+</script>
 
 <style scoped lang="scss">
 .header {

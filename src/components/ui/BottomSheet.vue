@@ -1,3 +1,51 @@
+<template>
+  <Teleport to="#portal-root">
+    <Transition name="bottom-sheet">
+      <div
+        v-if="isOpen"
+        class="bottom-sheet-overlay"
+        @click="handleOverlayClick"
+      >
+        <div
+          ref="sheetRef"
+          class="bottom-sheet"
+          :style="{ height: getHeight() }"
+          @click.stop
+        >
+          <!-- 핸들바 -->
+          <div v-if="showHandle" class="bottom-sheet-handle">
+            <span class="handle-bar"></span>
+          </div>
+
+          <!-- 헤더 -->
+          <div v-if="title || $slots.header" class="bottom-sheet-header">
+            <slot name="header">
+              <h3 class="bottom-sheet-title">{{ title }}</h3>
+            </slot>
+            <button
+              class="bottom-sheet-close"
+              @click="close"
+              aria-label="닫기"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- 본문 -->
+          <div class="bottom-sheet-body">
+            <slot></slot>
+          </div>
+
+          <!-- 푸터 (선택) -->
+          <div v-if="$slots.footer" class="bottom-sheet-footer">
+            <slot name="footer"></slot>
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
+</template>
+
 <script setup>
 import { ref, watch, onUnmounted } from 'vue'
 import { useScrollLock } from '@/composables/useScrollLock'
@@ -63,54 +111,6 @@ const getHeight = () => {
   return props.height
 }
 </script>
-
-<template>
-  <Teleport to="#portal-root">
-    <Transition name="bottom-sheet">
-      <div
-        v-if="isOpen"
-        class="bottom-sheet-overlay"
-        @click="handleOverlayClick"
-      >
-        <div
-          ref="sheetRef"
-          class="bottom-sheet"
-          :style="{ height: getHeight() }"
-          @click.stop
-        >
-          <!-- 핸들바 -->
-          <div v-if="showHandle" class="bottom-sheet-handle">
-            <span class="handle-bar"></span>
-          </div>
-
-          <!-- 헤더 -->
-          <div v-if="title || $slots.header" class="bottom-sheet-header">
-            <slot name="header">
-              <h3 class="bottom-sheet-title">{{ title }}</h3>
-            </slot>
-            <button
-              class="bottom-sheet-close"
-              @click="close"
-              aria-label="닫기"
-            >
-              ✕
-            </button>
-          </div>
-
-          <!-- 본문 -->
-          <div class="bottom-sheet-body">
-            <slot></slot>
-          </div>
-
-          <!-- 푸터 (선택) -->
-          <div v-if="$slots.footer" class="bottom-sheet-footer">
-            <slot name="footer"></slot>
-          </div>
-        </div>
-      </div>
-    </Transition>
-  </Teleport>
-</template>
 
 <style scoped>
 /* 오버레이 */

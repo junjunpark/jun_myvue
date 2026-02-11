@@ -1,18 +1,3 @@
-<script>
-import Header from '@/components/layout/Header.vue'
-import Footer from '@/components/layout/Footer.vue'
-// import LayoutMain from '@/components/layout/LayoutMain.vue'
-
-export default {
-  components: {
-    Header,
-    Footer,
-    // LayoutMain
-  }
-}
-</script>
-
-
 <template>
     <div id="skip" class="skip">
         <a href="#main">본문바로가기</a>
@@ -28,3 +13,16 @@ export default {
     </div>
 </template>
 
+<script>
+import Header from '@/components/layout/Header.vue'
+import Footer from '@/components/layout/Footer.vue'
+// import LayoutMain from '@/components/layout/LayoutMain.vue'
+
+export default {
+  components: {
+    Header,
+    Footer,
+    // LayoutMain
+  }
+}
+</script>

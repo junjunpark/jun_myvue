@@ -1,3 +1,30 @@
+<template>
+<form
+        @submit.prevent="onSubmit"
+    >
+        <div class="d-flex">
+            <div class="mr-2 flex-grow-1">
+                <input
+                    type="text"
+                    class="form-control"
+                    v-model="todo"
+                    placeholder="Type new to-do"
+                >
+            </div>
+            <div>
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                >
+                    Add
+                </button>
+            </div>
+        </div>
+        <div v-if="hasError" style="color:red"> 텍스트를 입력해주세요. </div>
+    </form>
+
+</template>
+
 <script>
 import { ref } from 'vue';
 export default {
@@ -34,30 +61,3 @@ export default {
 
 
 </script>
-
-<template>
-<form
-        @submit.prevent="onSubmit"
-    >
-        <div class="d-flex">
-            <div class="mr-2 flex-grow-1">
-                <input
-                    type="text"
-                    class="form-control"
-                    v-model="todo"
-                    placeholder="Type new to-do"
-                >
-            </div>
-            <div>
-                <button
-                    class="btn btn-primary"
-                    type="submit"
-                >
-                    Add
-                </button>
-            </div>
-        </div>
-        <div v-if="hasError" style="color:red"> 텍스트를 입력해주세요. </div>
-    </form>
-
-</template>

@@ -1,3 +1,9 @@
+<template>
+  <footer id="footer" class="footer" tabindex="-1">
+    <p> {{ title }}</p>
+  </footer>
+</template>
+
 <script>
 export default {
   name: 'Footer',
@@ -6,12 +12,6 @@ export default {
   }
 }
 </script>
-
-<template>
-  <footer id="footer" class="footer" tabindex="-1">
-    <p> {{ title }}</p>
-  </footer>
-</template>
 
 <style scoped lang="scss">
 .footer {

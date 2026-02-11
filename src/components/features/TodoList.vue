@@ -1,26 +1,3 @@
-<script>
-export default {
-    props: {
-        todos: {
-            type: Array,
-            requied: true
-        }
-    },
-    emits: ['toggle-todo','delete-todo'],
-    setup(props, {emit}){
-        const toggleTodo = (index)=> {
-            emit('toggle-todo',index)
-        }
-        const deleteTodo = (index)=> {
-            emit('delete-todo',index)
-        }
-        return {
-            toggleTodo,
-            deleteTodo
-        }
-    }
-}
-</script>
 <template>
 
 <div
@@ -63,6 +40,31 @@ export default {
 
 
 </template>
+
+<script>
+export default {
+    props: {
+        todos: {
+            type: Array,
+            requied: true
+        }
+    },
+    emits: ['toggle-todo','delete-todo'],
+    setup(props, {emit}){
+        const toggleTodo = (index)=> {
+            emit('toggle-todo',index)
+        }
+        const deleteTodo = (index)=> {
+            emit('delete-todo',index)
+        }
+        return {
+            toggleTodo,
+            deleteTodo
+        }
+    }
+}
+</script>
+
 <style scoped lang="scss">
 .todo {
     color: gray;
