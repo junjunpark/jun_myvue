@@ -59,6 +59,11 @@
       "id": "23db",
       "subject": "vue",
       "completed": false
+    },
+    {
+      "subject": "play",
+      "completed": true,
+      "id": "ec1a"
     }
   ]
 }

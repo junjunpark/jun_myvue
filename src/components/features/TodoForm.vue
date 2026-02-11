@@ -3,7 +3,7 @@
         @submit.prevent="onSubmit"
     >
         <div class="d-flex">
-            <div class="mr-2 flex-grow-1">
+            <div class="me-2 flex-grow-1">
                 <input
                     type="text"
                     class="form-control"
