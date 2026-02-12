@@ -1,7 +1,7 @@
 <template>
 <div class="container">
-    <h2>To-Do Page</h2>
-    <TodoCreateForm :editing = "true" />
+    <h2>Create Todo</h2>
+    <TodoCreateForm />
 </div>
 </template>
 <script>
@@ -11,6 +11,5 @@ export default {
     components: {
         TodoCreateForm
     },
-
 }
 </script>

@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/index.vue'          // 없으면 만들어도 됨
 import GuidePage from '@/pages/guide/index.vue'
 import TodosPage from '@/pages/todos/index.vue'
+import TodoCreatePage from '@/pages/todos/CreatePage.vue'
 import TodoPage from '@/pages/todos/_id.vue'
 
 const router = createRouter({
@@ -17,6 +18,7 @@ const router = createRouter({
     { path: '/guide', name: 'guide', component: GuidePage },
     // todos
     { path: '/todos', name: 'todos', component: TodosPage },
+    { path: '/todos/create', name: 'todoCreate', component: TodoCreatePage },
     { path: '/todos/:id', name: 'todo', component: TodoPage },
   ],
 })

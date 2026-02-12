@@ -1,7 +1,14 @@
 <template>
 <div class="container">
-    <h2>To-Do List</h2>
-
+    <div class="d-flex justify-content-between mb-3 mt-3">
+        <h2>To-Do List</h2>
+        <button
+            class="btn btn-primary"
+            @click="moveToCreatePage"
+        >
+            Create Todo
+        </button>
+    </div>
     <input
         type="text"
         class="form-control"
@@ -10,8 +17,7 @@
         @keyup.enter ="searchTodo"
     >
     <hr>
-    <TodoForm @add-todo="addTodo" />
-    <div v-if="error" style="color: red;">{{ error }}</div>
+
     <div v-if="!todos.length">
         {{ searchText ? '검색 결과가 없습니다' : 'to-do가 없습니다' }}
     </div>
@@ -68,18 +74,22 @@
 
 <script>
 import { ref, computed, watch } from 'vue';
-import TodoForm from '@/components/features/TodoForm.vue'
+//import TodoForm from '@/components/features/TodoForm.vue'
 import TodoList from '@/components/features/TodoList.vue'
 import Toast from '@/components/ui/Toast.vue';
 import { useToast } from '@/composables/toast';
+import { useRouter } from 'vue-router';
+import CreatePage from '@/pages/todos/CreatePage.vue';
 import axios from 'axios';
 export default {
     components: {
-        TodoForm,
+        //TodoForm,
         TodoList,
-        Toast
+        Toast,
+        CreatePage
     },
     setup() {
+        const router = useRouter();
         const todoStyle = {
             textDecoration : 'line-through',
             color: 'gray'
@@ -187,6 +197,11 @@ export default {
             if (page < 1 || page > numberOfPages.value) return;
             currentPage.value = page;
         }
+        const moveToCreatePage = () => {
+            router.push ({
+                name: 'todoCreate'
+            })
+        }
 
         let timeout = null;
         const searchTodo = ()=>{
@@ -212,6 +227,7 @@ export default {
             numberOfPages,
             currentPage,
             movePage,
+            moveToCreatePage,
             showToast,
             toastMessage,
             toastAlertType,
