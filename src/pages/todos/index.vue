@@ -159,16 +159,37 @@ export default {
             }
         }
 
-        const deleteTodo = async (index) => {
+        // const deleteTodo = async (index) => {
+        //     error.value = '';
+        //     const actualIndex = (currentPage.value - 1) * limit + index;
+        //     const id = todos.value[actualIndex].id;
+        //     try {
+        //         await axios.delete(`http://localhost:3000/todos/${id}`)
+        //         todos.value.splice(actualIndex, 1)
+        //         if (paginatedTodos.value.length === 0 && currentPage.value > 1) {
+        //             currentPage.value--;
+        //         }
+        //     } catch(err) {
+        //         console.log(err);
+        //         error.value = 'Network Error'
+        //         triggerToast('Something Wrong','danger');
+        //     }
+        // }
+
+        const deleteTodo = async (todoId) => {
             error.value = '';
-            const actualIndex = (currentPage.value - 1) * limit + index;
-            const id = todos.value[actualIndex].id;
             try {
-                await axios.delete(`http://localhost:3000/todos/${id}`)
-                todos.value.splice(actualIndex, 1)
+                await axios.delete(`http://localhost:3000/todos/${todoId}`);
+
+                // todoId로 해당 todo를 찾아서 삭제
+                todos.value = todos.value.filter(todo => todo.id !== todoId);
+
+                // 현재 페이지에 항목이 없으면 이전 페이지로 이동
                 if (paginatedTodos.value.length === 0 && currentPage.value > 1) {
                     currentPage.value--;
                 }
+
+                triggerToast('Successfully deleted!');
             } catch(err) {
                 console.log(err);
                 error.value = 'Network Error'

@@ -7,7 +7,7 @@
         <Header />
         <main id="main" tabindex="-1">
             <!-- <LayoutMain /> -->
-            <slot />
+            <slot name="view" />
         </main>
         <Footer />
     </div>

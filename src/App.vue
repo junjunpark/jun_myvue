@@ -1,6 +1,8 @@
 <template>
   <DefaultLayout>
-    <router-view />
+    <template v-slot:view>
+        <router-view />
+    </template>
   </DefaultLayout>
 </template>
 
